@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
 #############################################
-#	Programme Python type					#
-#	Auteurs : 	Aurelien Monnet-Paquet		#
-#				Francesco Furfaro			#
-#				Benoit Peynet				#
+#	Programme Python type											#
+#	Auteurs : 	Aurelien Monnet-Paquet				#
+#							Francesco Furfaro							#
+#							Benoit Peynet									#
 #############################################
 
 
@@ -184,54 +184,54 @@ screen = pygame.display.set_mode((W, H))
 clock = pygame.time.Clock()
 running = True
 while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False 
-        elif event.type == pygame.KEYUP:
-        	zero()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                running = False
-            # takeoff / land
-            elif event.key == pygame.K_RETURN:
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			running = False 
+		elif event.type == pygame.KEYUP:
+			zero()
+		elif event.type == pygame.KEYDOWN:
+			if event.key == pygame.K_ESCAPE:
+				running = False
+			# takeoff / land
+			elif event.key == pygame.K_RETURN:
 				takeoff()
-            elif event.key == pygame.K_SPACE:
+			elif event.key == pygame.K_SPACE:
 				print "Landing !!"
 				landing()
-            # emergency
-            elif event.key == pygame.K_BACKSPACE:
-            	print "EMERGENCY !!!!"
-                emergency()
-            # Monte / Descend
-            elif event.key == pygame.K_z:
-                print "Monte"
-            	up()
-            elif event.key == pygame.K_s:
-                print "Descend"
-            	down()
-            # Tourne a gauche / droite (pas de deplacement)
-            elif event.key == pygame.K_q:
-                print "Tourne a gauche"
-            	noseleft()
-            elif event.key == pygame.K_d:
-                print "Tourne a droite"
-            	noseright()
-            # Avance / Recule
-            elif event.key == pygame.K_UP:
-            	print "Avance"
-            	avance()
-            elif event.key == pygame.K_DOWN:
-            	print "Recule"
-            	recule()
-            # Deplacement a gauche / roite
-            elif event.key == pygame.K_LEFT:
-            	print "Deplace a gauche"
-            	gauche()
-            elif event.key == pygame.K_RIGHT:
-            	print "Deplace a droite"
-            	droite()
-    pygame.display.flip()
-    clock.tick(50)
+			# emergency
+			elif event.key == pygame.K_BACKSPACE:
+				print "EMERGENCY !!!!"
+				emergency()
+			# Monte / Descend
+			elif event.key == pygame.K_z:
+				print "Monte"
+				up()
+			elif event.key == pygame.K_s:
+				print "Descend"
+				down()
+			# Tourne a gauche / droite (pas de deplacement)
+			elif event.key == pygame.K_q:
+				print "Tourne a gauche"
+				noseleft()
+			elif event.key == pygame.K_d:
+				print "Tourne a droite"
+				noseright()
+			# Avance / Recule
+			elif event.key == pygame.K_UP:
+				print "Avance"
+				avance()
+			elif event.key == pygame.K_DOWN:
+				print "Recule"
+				recule()
+			# Deplacement a gauche / roite
+			elif event.key == pygame.K_LEFT:
+				print "Deplace a gauche"
+				gauche()
+			elif event.key == pygame.K_RIGHT:
+				print "Deplace a droite"
+				droite()
+	pygame.display.flip()
+	clock.tick(50)
 
 print "Shutting down...",
 print "Ok."
